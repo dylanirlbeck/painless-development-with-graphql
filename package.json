@@ -10,5 +10,9 @@
     "code-surfer": "3.0.0-beta.1",
     "mdx-deck": "3.0.13"
   },
-  "name": "my-deck"
+  "name": "my-deck",
+  "dependencies": {
+    "@mdx-deck/themes": "^3.0.8",
+    "styled-components": "^4.4.0"
+  }
 }

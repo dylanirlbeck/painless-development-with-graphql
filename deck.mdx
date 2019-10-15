@@ -3,142 +3,329 @@ import {
   CodeSurferColumns,
   Step,
 } from "code-surfer";
-import { github, vsDark } from "@code-surfer/themes";
+import {
+  vsDark,
+  github,
+  nightOwl,
+} from "@code-surfer/themes";
 
-export const theme = vsDark;
+export const theme = nightOwl;
 
-# Hello 👋
+# Painless Development with GraphQL
 
-You are using [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](https://codesurfer.pomb.us)
+Mitch Masia, [EEON](http://eeon.com)
 
 ---
 
 <CodeSurfer>
 
-```js title="This is a title" subtitle="and this a subtitle"
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
-}
+```js title="Who remembers this?"
+// Configure
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "/server", true);
+xhr.setRequestHeader(
+  "Content-Type",
+  "application/x-www-form-urlencoded"
+);
 
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
-
-  if (!sit || ut < 1) {
-    return [];
+// Callback
+xhr.onreadystatechange = function() {
+  if (this.readyState === 4 && this.status === 200) {
+    // Request finished. Do processing here.
   }
+};
 
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
-
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
-
-  return aliqua;
-}
+// Send
+xhr.send("page=2&pageSize=10");
 ```
 
-```js
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
-}
+```js 1:7 title="Who remembers this?"
+// Configure
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "/server", true);
+xhr.setRequestHeader(
+  "Content-Type",
+  "application/x-www-form-urlencoded"
+);
 
-function adipiscing(...elit) {
-  if (!elit.sit) {
-    return [];
+// Callback
+xhr.onreadystatechange = function() {
+  if (this.readyState === 4 && this.status === 200) {
+    // Request finished. Do processing here.
   }
+};
 
-  const sed = elit[0];
-  return eiusmod.tempor(sed) ? sed : [sed];
-}
-
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
-
-  if (!sit || ut < 1) {
-    return [];
-  }
-
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
-
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
-
-  return aliqua;
-}
+// Send
+xhr.send("page=2&pageSize=10");
 ```
 
-```diff 1[10:14],2[15:19],3[22:27],10:12
+```js 8:15 title="Who remembers this?"
+// Configure
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "/server", true);
+xhr.setRequestHeader(
+  "Content-Type",
+  "application/x-www-form-urlencoded"
+);
 
+// Callback
+xhr.onreadystatechange = function() {
+  if (this.readyState === 4 && this.status === 200) {
+    // Request finished. Do processing here.
+  }
+};
+
+// Send
+xhr.send("page=2&pageSize=10");
+```
+
+```js 15:17 title="Who remembers this?"
+// Configure
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "/server", true);
+xhr.setRequestHeader(
+  "Content-Type",
+  "application/x-www-form-urlencoded"
+);
+
+// Callback
+xhr.onreadystatechange = function() {
+  if (this.readyState === 4 && this.status === 200) {
+    // Request finished. Do processing here.
+  }
+};
+
+// Send
+xhr.send("page=2&pageSize=10");
 ```
 
 </CodeSurfer>
 
 ---
 
-<CodeSurferColumns themes={[vsDark, github]}>
+<CodeSurfer>
+
+```js title="How about this?"
+$.ajax({
+  url: "/profile",
+  type: "GET",
+  data: "id=5",
+  success: function(data) {
+    // Handle success
+    $("#ajax-results").html(data);
+  },
+  error: function(e) {
+    // Handle error
+  },
+});
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurferColumns>
 
 <Step>
 
-```js
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+```js title="Component"
+class Profile extends React.Component {
+  componentDidMount() {
+    this.props.fetchProfile();
+  }
+
+  render() {
+    // return JSX
+  }
+}
+
+// Select data from Redux
+const mapStateToProps = state => ({
+  profile: state.profile,
+});
+
+// Connect Action Creators to Redux
+const mapDispatchToProps = {
+  fetchProfile,
+};
+
+// Connect to Redux
+const ConnectedProfile = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);
+
+export default ConnectedProfile;
 ```
 
-```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
+```js title="Actions"
+// Redux Action Creators
+const fetchProfileRequest = () => ({
+  type: "FETCH_PROFILE_REQUEST",
+  payload: {},
+});
+
+const fetchProfileSuccess = ({ profile }) => ({
+  type: "FETCH_PROFILE_SUCCESS",
+  payload: { profile },
+});
+
+const fetchProfileFailure = ({ error }) => ({
+  type: "FETCH_PROFILE_ERROR",
+  payload: { error },
+});
+
+// Redux Action
+export const fetchProfile = ({ id }) => async dispatch => {
+  dispatch(fetchProfileRequest());
+  try {
+    const profile = await profileUtils.getProfile({ id });
+    fetchProfileSuccess({ profile });
+  } catch (error) {
+    fetchProfileFailure({ error });
+  }
+};
+```
+
+```js title="Reducer"
+// Initial state
+const initialState = {
+  error: null,
+  loading: false,
+  profile: null,
+};
+
+export default reducer = (state = initialState, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case "FETCH_PROFILE_REQUEST":
+      return {
+        ...state,
+        error: null,
+        loading: true,
+        profile: null,
+      };
+    case "FETCH_PROFILE_SUCCESS":
+      return {
+        ...state,
+        error: false,
+        loading: false,
+        profile: payload.profile,
+      };
+    case "FETCH_PROFILE_FAILURE":
+      return {
+        ...state,
+        error: payload.error,
+        loading: false,
+        profile: null,
+      };
+    default:
+      return state;
+  }
+};
 ```
 
 </Step>
 
 <Step>
 
-```js
-const lorem = (ipsum, dolor, sit) => {
-  const amet = dolor - ipsum;
-  return consectetur.adipiscing(
-    {
-      elit: sed.eiusmod(sit - dolor) / amet + 2,
-    },
-    (tempor, incididunt) => ipsum + amet * incididunt
-  );
+```js 12:26 title="Component" subtitle="Connect to Redux"
+// Component
+class Profile extends React.Component {
+  componentDidMount() {
+    this.props.fetchProfile();
+  }
+
+  render() {
+    // return JSX
+  }
+}
+
+// Select data from Redux
+const mapStateToProps = state => ({
+  profile: state.profile,
+});
+
+// Connect Action Creators to Redux
+const mapDispatchToProps = {
+  fetchProfile,
 };
 
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+// Connect to Redux
+const ConnectedProfile = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);
+
+export default ConnectedProfile;
 ```
 
-```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
+```js 15:26 title="Actions" subtitle="Higher-order async function via redux-thunk"
+// Redux Action Creators
+const fetchProfileRequest = () => ({
+  type: "FETCH_PROFILE_REQUEST",
+  payload: {},
+});
 
-const sed = (eiusmod, tempor, incididunt) => {
-  const ut = tempor - eiusmod;
-  return labore.et(
-    {
-      amet: dolore.magna(incididunt - tempor) / ut + 2,
-    },
-    (aliqua, elit) => eiusmod + ut * elit
-  );
+const fetchProfileSuccess = ({ profile }) => ({
+  type: "FETCH_PROFILE_SUCCESS",
+  payload: { profile },
+});
+
+const fetchProfileFailure = ({ error }) => ({
+  type: "FETCH_PROFILE_ERROR",
+  payload: { error },
+});
+
+// Redux Action
+export const fetchProfile = ({ id }) => async dispatch => {
+  dispatch(fetchProfileRequest());
+  try {
+    const profile = await profileUtils.getProfile({ id });
+    fetchProfileSuccess({ profile });
+  } catch (error) {
+    fetchProfileFailure({ error });
+  }
+};
+```
+
+```js 6:36 title="Reducer" subtitle="Handle state updates from dispatched events"
+// Initial state
+const initialState = {
+  error: null,
+  loading: false,
+  profile: null,
+};
+
+export default reducer = (state = initialState, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case "FETCH_PROFILE_REQUEST":
+      return {
+        ...state,
+        error: null,
+        loading: true,
+        profile: null,
+      };
+    case "FETCH_PROFILE_SUCCESS":
+      return {
+        ...state,
+        error: false,
+        loading: false,
+        profile: payload.profile,
+      };
+    case "FETCH_PROFILE_FAILURE":
+      return {
+        ...state,
+        error: payload.error,
+        loading: false,
+        profile: null,
+      };
+    default:
+      return state;
+  }
 };
 ```
 
@@ -148,5 +335,6 @@ const sed = (eiusmod, tempor, incididunt) => {
 
 ---
 
-docs:  
-[codesurfer.pomb.us](https://codesurfer.pomb.us)
+You can ease the pain with utils, but still...
+
+## WOOF 🐶

@@ -9,7 +9,7 @@ const steps = [
   { title: "Different paradigm" },
   { title: "Core Tenets" },
   { title: "Moving faster" },
-  { title: "Advanced" },
+  { title: "Hyperspeed" },
 ];
 
 const TableOfContents = props => {

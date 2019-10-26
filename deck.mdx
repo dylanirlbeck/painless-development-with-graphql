@@ -11,6 +11,7 @@ import {
 } from "@code-surfer/themes";
 import Author from "./slides/Author";
 import TableOfContents from "./slides/TableOfContents";
+import SimpleProfilePlaceholder from "./components/ui/SimpleProfilePlaceholder";
 
 export const theme = nightOwl;
 
@@ -484,10 +485,129 @@ export default reducer = (state = initialState, action) => {
 
 ---
 
-You can ease the pain with utils, but still...
+# Same fundamental problems
 
-## WOOF 🐶
+- Consume APIs
+
+- Manage frontend state
+
+- Keep moving forward
 
 ---
 
-We're just making an API request, it doesn't have to be this hard
+<TableOfContents activeStep={1} />
+
+---
+
+# GraphQL
+
+Spec released by Facebook in 2015
+
+- Shift to mobile
+
+- High network usage
+
+- Interconnected data
+
+- [Interview with Lee Byron (Co-creator GraphQL)](https://nordicapis.com/interview-with-graphql-co-creator-lee-byron/)
+
+---
+
+# It's a spec, not code
+
+---
+
+# Shift to mobile
+
+- News Feed on iOS app
+
+- Less powerful devices
+
+- Flaky networks
+
+---
+
+# High network usage
+
+<CodeSurferColumns>
+
+<Step>
+
+```js title="REST Request /profile"
+{
+  id: 1,
+  age: 29,
+  firstName: 'John',
+  lastName: 'Smith',
+  nationality: 'Canadian',
+  mothersMaidenName: 'Johnson',
+  fathersFirstPet: 'Goldy the goldfish',
+  email: 'john.smith@email.com',
+  interests: ['Skiing', 'Comic Books'],
+  profilePictureUrl: 'https://thispersondoesnotexist.com/',
+  relationshipStatus: {
+    status: "its_complicated",
+    partner: {
+      firstName: 'Jessica',
+      lastname: 'Thompson',
+      age: 30,
+      nationality: 'American'
+    }
+  }
+}
+```
+
+```js title="What we actually need"
+{
+  id: 1,
+  firstName: 'John',
+  lastName: 'Smith',
+  profilePictureUrl: 'https://thispersondoesnotexist.com/'
+}
+```
+
+<SimpleProfilePlaceholder />
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+# Interconnected data
+
+<CodeSurferColumns>
+
+<Step>
+
+```js title="GET /users"
+[
+  { id: 1, firstName: "John" },
+  { id: 2, firstName: "Sarah" },
+  { id: 3, firstName: "Julia" },
+];
+```
+
+```js title="GET /blog-posts"
+[
+  { id: 1, authorId: 2 },
+  { id: 2, authorId: 2 },
+  { id: 3, authorId: 3 },
+];
+```
+
+```js title="Connect" subtitle="This isn't just annoying, it can have runtime perf issues"
+const getUserProfileForBlogPost = postId => {
+  // Traverse Blog Posts
+  const author = blogPosts.find(post => post.id === postId);
+
+  // Traverse users
+  const user = users.find(user => user.id === author.id);
+
+  return user;
+};
+```
+
+</Step>
+
+</CodeSurferColumns>

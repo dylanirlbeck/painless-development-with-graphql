@@ -683,8 +683,6 @@ The definition of what a GraphQL API exposes
 
 - Output Types
 
-- Enums
-
 - Queries (GET)
 
 - Mutations (PUT, PATCH, POST, DELETE)
@@ -811,4 +809,501 @@ query {
 
 </Step>
 
+<Step>
+
+```js 4 title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+}
+```
+
+```js title="Client"
+query {
+  author(id: 1) {
+    fullName
+    blogPosts {
+      title
+    }
+  }
+}
+```
+
+</Step>
+
+<Step>
+
+```js 4 title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+}
+```
+
+```js title="Client"
+query {
+  author(id: 1) {
+    fullName
+    blogPosts {
+      title
+    }
+  }
+}
+
+// Results
+{
+  author: {
+    fullName: 'John Smith',
+    blogPosts: [
+      { title: 'Software Development 101' },
+      { title: 'Software Development 102' }
+    ]
+  }
+}
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+  blogPost(id: ID!): BlogPost!
+}
+```
+
+```js title="Client"
+query {
+  blogPost(id: 1) {
+    title
+    author {
+      age
+      lastName
+    }
+  }
+}
+
+// Results
+{
+  blogPost: {
+    title: 'Software Development 101'
+    author: {
+      age: 29,
+      lastName: 'Smith'
+    }
+  }
+}
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+  blogPost(id: ID!): BlogPost!
+}
+
+type Mutation {
+  updateBlogPost(????): BlogPost!
+}
+```
+
+```js title="Client"
+// Nothing here yet
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+  blogPost(id: ID!): BlogPost!
+}
+```
+
+```js title="Client"
+query {
+  blogPost(id: 1) {
+    title
+    author {
+      age
+      lastName
+    }
+  }
+}
+
+// Results
+{
+  blogPost: {
+    title: 'Software Development 101',
+    author: {
+      age: 29,
+      lastName: 'Smith'
+    }
+  }
+}
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+  blogPost(id: ID!): BlogPost!
+}
+
+input UpdateBlogPostInput {
+  id: ID!
+  title: String
+  content: String
+}
+
+type Mutation {
+  updateBlogPost(input: UpdateBlogPostInput!): BlogPost!
+}
+```
+
+```js title="Client"
+mutation {
+  updateBlogPost(input: { id: 1, title: "This is a new title" }) {
+    title
+    id
+  }
+}
+
+// Results
+{
+  blogPost: {
+    id: 1
+    title: 'This is a new title'
+  }
+}
+```
+
+</Step>
+
 </CodeSurferColumns>
+
+---
+
+# Not magic
+
+Because we need to write `resolvers`
+
+---
+
+<CodeSurferColumns>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+  blogPost(id: ID!): BlogPost!
+}
+
+input UpdateBlogPostInput {
+  id: ID!
+  title: String
+  content: String
+}
+
+type Mutation {
+  updateBlogPost(input: UpdateBlogPostInput!): BlogPost!
+}
+```
+
+```js title="Resolvers"
+const resolvers = {
+  Query: {
+    author: async (parent, args, context, info) => {
+      const user = await UserModel.findById(args.id);
+      return user;
+    },
+    blogPost: async (parent, args, context, info) => {
+      const blogPost = await BlogPostModel.findById(
+        args.id
+      );
+      return blogPost;
+    },
+  },
+};
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+  blogPost(id: ID!): BlogPost!
+}
+
+input UpdateBlogPostInput {
+  id: ID!
+  title: String
+  content: String
+}
+
+type Mutation {
+  updateBlogPost(input: UpdateBlogPostInput!): BlogPost!
+}
+```
+
+```js title="Resolvers"
+const resolvers = {
+  User: {
+    fullName: (parent, args, context, info) =>
+      `${parent.firstName} ${parent.lastName}`,
+    blogPosts: async (parent, args, context, info) => {
+      return await BlogPostModel.find({ authorId: parent.id })
+    }
+  },
+  BlogPost: {
+    author: (parent) => {
+      return await UserModel.findById(parent.authorId)
+    }
+  },
+  Query: {
+    author: async (parent, args, context, info) => {
+      const user = await UserModel.findById(args.id);
+      return user;
+    },
+    blogPost: async (parent, args, context, info) => {
+      const blogPost = await BlogPostModel.findById(
+        args.id
+      );
+      return blogPost;
+    },
+  },
+};
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+  blogPost(id: ID!): BlogPost!
+}
+
+input UpdateBlogPostInput {
+  id: ID!
+  title: String
+  content: String
+}
+
+type Mutation {
+  updateBlogPost(input: UpdateBlogPostInput!): BlogPost!
+}
+```
+
+```js title="Resolvers"
+const resolvers = {
+  User: {
+    fullName: (parent, args, context, info) =>
+      `${parent.firstName} ${parent.lastName}`,
+    blogPosts: async (parent, args, context, info) => {
+      return await BlogPostModel.find({ authorId: parent.id })
+    }
+  },
+  BlogPost: {
+    author: (parent) => {
+      return await UserModel.findById(parent.authorId)
+    }
+  },
+  Query: {
+    author: async (parent, args, context, info) => {
+      const user = await UserModel.findById(args.id);
+      return user;
+    },
+    blogPost: async (parent, args, context, info) => {
+      const blogPost = await BlogPostModel.findById(
+        args.id
+      );
+      return blogPost;
+    },
+  },
+  Mutation: {
+    updateBlogPost: () => {
+      // Code to update a blog post
+    }
+  }
+};
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+# TypeDefs + Resolvers = Schema
+
+- Enforce a strict contract
+
+- Consumer-focused
+
+---
+
+# A whole bunch of other stuff
+
+- Enums, Directives, Scalars, Unions, Interfaces, Subscriptions
+
+- Authentication, Authorization, Cost Analysis
+
+---
+
+<TableOfContents activeStep={3} />

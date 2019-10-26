@@ -10,6 +10,7 @@ import {
   nightOwl,
 } from "@code-surfer/themes";
 import Author from "./slides/Author";
+import TableOfContents from "./slides/TableOfContents";
 
 export const theme = nightOwl;
 
@@ -18,6 +19,29 @@ export const theme = nightOwl;
 ---
 
 <Author />
+
+---
+
+<TableOfContents activeStep={0} />
+
+---
+
+# We had SSR
+
+<small>
+  <em>Reload page on every request</em>
+</small>
+
+<Image
+  src="https://sitedown.co/sites/default/files/styles/800px/public/reports/Screen%20shot%202013-11-14%20at%2010.23.34%20PM.png?itok=Yfkg1ag6"
+  size={800}
+/>
+
+---
+
+# Along came XHR
+
+# 😑
 
 ---
 
@@ -107,6 +131,12 @@ xhr.send("page=2&pageSize=10");
 
 ---
 
+# jQuery to the rescue
+
+# 🤯
+
+---
+
 <CodeSurfer>
 
 ```js title="How about this?"
@@ -122,6 +152,121 @@ $.ajax({
     // Handle error
   },
 });
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer>
+
+```js title="But then we got this"
+$("#item").css("color", "#123456");
+$("#item").html("hello");
+$("#item").css("background-color", "#ffffff");
+
+// you could use this instead
+$("#item")
+  .css("color", "#123456")
+  .html("hello")
+  .css("background-color", "#ffffff");
+
+// or even
+var item = $("#item");
+item.css("color", "#123456");
+item.html("hello");
+item.css("background-color", "#ffffff");
+
+// as for loops, this is a big no-no
+console.time("no cache");
+for (var i = 0; i < 1000; i++) {
+  $("#list").append(i);
+}
+console.timeEnd("no cache");
+
+// much better this way
+console.time("cache");
+var item = $("#list");
+
+for (var i = 0; i < 1000; i++) {
+  item.append(i);
+}
+console.timeEnd("cache");
+```
+
+</CodeSurfer>
+
+---
+
+# Save us Angular!
+
+🥺
+
+---
+
+<CodeSurfer>
+
+```js title="It was amazing" subtitle="Organized code, template binding, routing, and services!"
+app.controller("Ctrl", function($scope) {
+  this.name = "name";
+
+  $scope.$watch(
+    angular.bind(function() {
+      return this.title;
+    }),
+    function(newVal, oldVal) {}
+  );
+});
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer>
+
+```js title="rootScope is evil" subtitle="Two-way binding is crazy"
+var myObject = {
+  status: 10,
+};
+
+$rootScope.$broadcast("status_updated", myObject);
+
+$rootScope.$on("status_updated", function(event, obj) {
+  console.log(obj.status); // 10
+});
+```
+
+</CodeSurfer>
+
+---
+
+# #react
+
+<iframe
+  src="https://giphy.com/embed/l0NwKAlZzZ9pyi9fa"
+  width="500"
+  height="400"
+  frameBorder="0"
+  class="giphy-embed"
+  allowFullScreen
+/>
+
+---
+
+<CodeSurfer>
+
+```jsx title="Mind.  Blown.  Again.    🤯"
+class Username extends React.Component {
+  render() {
+    const { firstName, lastName } = this.props;
+    return (
+      <h1>
+        {firstName} {lastName}
+      </h1>
+    );
+  }
+}
 ```
 
 </CodeSurfer>

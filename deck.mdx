@@ -1,4 +1,4 @@
-import { Image } from "mdx-deck";
+import { Image, Split } from "mdx-deck";
 import {
   CodeSurfer,
   CodeSurferColumns,
@@ -10,6 +10,7 @@ import {
   nightOwl,
 } from "@code-surfer/themes";
 import Author from "./slides/Author";
+import OneEndpoint from "./slides/OneEndpoint/";
 import TableOfContents from "./slides/TableOfContents";
 import SimpleProfilePlaceholder from "./components/ui/SimpleProfilePlaceholder";
 
@@ -649,3 +650,165 @@ Documentation
 ---
 
 <TableOfContents activeStep={2} />
+
+---
+
+# Core Tenets
+
+- One endpoint
+
+- Query connected data
+
+- Strongly enforced contract
+
+---
+
+<OneEndpoint />
+
+---
+
+# GraphQL Schema (Backend)
+
+- TypeDefs
+
+- Resolvers
+
+---
+
+# TypeDefs
+
+The definition of what a GraphQL API exposes
+
+- Input Types
+
+- Output Types
+
+- Enums
+
+- Queries (GET)
+
+- Mutations (PUT, PATCH, POST, DELETE)
+
+---
+
+<CodeSurferColumns>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+}
+```
+
+```js title="Client"
+// Nothing yet
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+```
+
+```js title="Client"
+// Nothing yet
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  title: String!
+  content: String!
+}
+```
+
+```js title="Client"
+// Nothing yet
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+```
+
+```js title="Client"
+// Nothing yet
+```
+
+</Step>
+
+<Step>
+
+```js title="TypeDefs"
+type User {
+  id: ID!
+  age: Int
+  blogPosts: [BlogPost]!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type BlogPost {
+  id: ID!
+  author: User!
+  title: String!
+  content: String!
+}
+
+type Query {
+  author(id: ID!): User!
+}
+```
+
+```js title="Client"
+query {
+  author(id: 1) {
+    fullName
+  }
+}
+```
+
+</Step>
+
+</CodeSurferColumns>

@@ -1,10 +1,6 @@
 import React from "react";
-import { Image } from "mdx-deck";
 import { Row } from "../../components/ui/Common";
-import withLink from "../../components/hocs/withLink";
 import ImagesRow from "./components/ImagesRow";
-
-const LinkableImage = withLink(Image);
 
 const Author = props => {
   return (
@@ -13,15 +9,20 @@ const Author = props => {
         <h2>Mitch Masia &nbsp; &middot; &nbsp;</h2>
         <h2>CTO &nbsp;</h2>
         <h2>@ &nbsp;</h2>
-        <LinkableImage
-          url="https://eeon.com"
-          src="https://files.slack.com/files-pri/TKTKDN7H6-FP2V6AW9Z/logo-white_p_2000.png"
-          size={200}
-          style={{
-            height: 200,
-            width: 200,
-          }}
-        />
+        <a
+          href="https://eeon.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <img
+            src="https://files.slack.com/files-pri/TKTKDN7H6-FP2V6AW9Z/logo-white_p_2000.png"
+            style={{
+              height: 60,
+              width: 200,
+              marginTop: 14,
+            }}
+          />
+        </a>
       </Row>
       <ImagesRow
         style={{ opacity: 0.7 }}

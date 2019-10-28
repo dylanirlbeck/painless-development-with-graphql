@@ -21,7 +21,16 @@ const ClientAlternatives = () => {
       <h1 style={{ textAlign: "center" }}>
         Client Alternatives
       </h1>
-      <p>There's a couple more, but these are the big 🐶</p>
+      <p>
+        There's a couple more, but these are the big{" "}
+        <span
+          alt="Dog Emoji"
+          role="img"
+          aria-label="Dog Emoji"
+        >
+          🐶
+        </span>
+      </p>
       <Row justify="between" style={{ marginTop: 100 }}>
         {clients.map(client => {
           return (

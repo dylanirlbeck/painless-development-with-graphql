@@ -1011,56 +1011,6 @@ type Query {
   author(id: ID!): User!
   blogPost(id: ID!): BlogPost!
 }
-```
-
-```js title="Client"
-query {
-  blogPost(id: 1) {
-    title
-    author {
-      age
-      lastName
-    }
-  }
-}
-
-// Results
-{
-  blogPost: {
-    title: 'Software Development 101',
-    author: {
-      age: 29,
-      lastName: 'Smith'
-    }
-  }
-}
-```
-
-</Step>
-
-<Step>
-
-```js title="TypeDefs"
-type User {
-  id: ID!
-  age: Int
-  blogPosts: [BlogPost]!
-  firstName: String!
-  lastName: String!
-  fullName: String!
-}
-
-type BlogPost {
-  id: ID!
-  author: User!
-  title: String!
-  content: String!
-}
-
-type Query {
-  author(id: ID!): User!
-  blogPost(id: ID!): BlogPost!
-}
 
 input UpdateBlogPostInput {
   id: ID!

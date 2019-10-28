@@ -1,12 +1,12 @@
 import React from "react";
 import { ApolloProvider } from "react-apollo";
 import { ApolloProvider as ApolloProviderHooks } from "@apollo/react-hooks";
-import { client } from "../../lib/graphql/config";
+import apolloClient from "../../src/gatsby-theme-apollo/client";
 
 const withGraphQL = BaseComponent => props => {
   return (
-    <ApolloProvider client={client}>
-      <ApolloProviderHooks client={client}>
+    <ApolloProvider client={apolloClient}>
+      <ApolloProviderHooks client={apolloClient}>
         <BaseComponent {...props} />
       </ApolloProviderHooks>
     </ApolloProvider>

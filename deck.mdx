@@ -13,8 +13,11 @@ import Author from "./slides/Author";
 import OneEndpoint from "./slides/OneEndpoint/";
 import MountingExample from "./slides/MountingExample";
 import TableOfContents from "./slides/TableOfContents";
+import MutationExample from "./slides/MutationExample/";
+import OnDemandExample from "./slides/OnDemandExample/";
 import ClientAlternatives from "./slides//ClientAlternatives/";
 import SimpleProfilePlaceholder from "./components/ui/SimpleProfilePlaceholder";
+import QueryAndMutationExample from "./slides/QueryAndMutationExample";
 
 export const theme = nightOwl;
 
@@ -517,6 +520,10 @@ Spec released by Facebook in 2015
 ---
 
 # It's a spec, not code
+
+---
+
+# [HEAVY adoption](https://landscape.graphql.org/category=graph-ql-adopter&format=card-mode&grouping=category)
 
 ---
 
@@ -1327,3 +1334,183 @@ const resolvers = {
 ---
 
 <MountingExample />
+
+---
+
+<OnDemandExample />
+
+---
+
+<MutationExample />
+
+---
+
+<QueryAndMutationExample />
+
+---
+
+# This is amazing
+
+<CodeSurferColumns>
+
+<Step>
+
+```js title="Component"
+// Component
+class Profile extends React.Component {
+  componentDidMount() {
+    this.props.fetchProfile();
+  }
+
+  render() {
+    // return JSX
+  }
+}
+
+// Select data from Redux
+const mapStateToProps = state => ({
+  profile: state.profile,
+});
+
+// Connect Action Creators to Redux
+const mapDispatchToProps = {
+  fetchProfile,
+};
+
+// Connect to Redux
+const ConnectedProfile = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);
+
+export default ConnectedProfile;
+```
+
+```js title="Actions"
+// Redux Action Creators
+const fetchProfileRequest = () => ({
+  type: "FETCH_PROFILE_REQUEST",
+  payload: {},
+});
+
+const fetchProfileSuccess = ({ profile }) => ({
+  type: "FETCH_PROFILE_SUCCESS",
+  payload: { profile },
+});
+
+const fetchProfileFailure = ({ error }) => ({
+  type: "FETCH_PROFILE_ERROR",
+  payload: { error },
+});
+
+// Redux Action
+export const fetchProfile = ({ id }) => async dispatch => {
+  dispatch(fetchProfileRequest());
+  try {
+    const profile = await profileUtils.getProfile({ id });
+    fetchProfileSuccess({ profile });
+  } catch (error) {
+    fetchProfileFailure({ error });
+  }
+};
+```
+
+```js title="Reducer"
+// Initial state
+const initialState = {
+  error: null,
+  loading: false,
+  profile: null,
+};
+
+export default reducer = (state = initialState, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case "FETCH_PROFILE_REQUEST":
+      return {
+        ...state,
+        error: null,
+        loading: true,
+        profile: null,
+      };
+    case "FETCH_PROFILE_SUCCESS":
+      return {
+        ...state,
+        error: false,
+        loading: false,
+        profile: payload.profile,
+      };
+    case "FETCH_PROFILE_FAILURE":
+      return {
+        ...state,
+        error: payload.error,
+        loading: false,
+        profile: null,
+      };
+    default:
+      return state;
+  }
+};
+```
+
+```js title="Apollo + Hooks" subtitle="No overfetching, no state management"
+const template = gql`
+  query {
+    me {
+      firstName
+    }
+  }
+`;
+
+const { data, error, loading } = useQuery(template);
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+# So much faster
+
+(Blog Posts with createdAt & views)
+
+---
+
+<QueryAndMutationExample />
+
+---
+
+# What do we have?
+
+- Strong contract
+
+- Documentation
+
+- Centralized config
+
+- No overfetching
+
+- _Automatic_ state management
+
+---
+
+# What else?
+
+- The first time you do this, it's **really** hard
+
+- Bunch of extras to productionize an API
+
+---
+
+# Thank you + Q&A
+
+<iframe
+  src="https://giphy.com/embed/IcGkqdUmYLFGE"
+  width="800"
+  height="500"
+  frameBorder="0"
+  class="giphy-embed"
+  allowFullScreen
+/>

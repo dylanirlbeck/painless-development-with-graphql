@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  Row,
-  Container,
-  Column,
-} from "../../components/ui/Common";
+import { Row, Container } from "../../components/ui/Common";
 
 const restRequests = [
   { method: "GET", route: "/me" },

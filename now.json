@@ -1,0 +1,22 @@
+{
+  "name": "painless-development-with-graphql",
+  "alias": "painless.now.sh",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "public"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "headers": {
+        "cache-control": "s-maxage=1000"
+      },
+      "dest": "/index.html"
+    }
+  ]
+}

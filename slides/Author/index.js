@@ -15,7 +15,7 @@ const Author = props => {
           target="_blank"
         >
           <img
-            src="https://files.slack.com/files-pri/TKTKDN7H6-FP2V6AW9Z/logo-white_p_2000.png"
+            src="https://res.cloudinary.com/eeon/image/upload/v1572446232/fixtures/qrfnrrppxrrdqnrvxq3b.png"
             style={{
               height: 60,
               width: 200,

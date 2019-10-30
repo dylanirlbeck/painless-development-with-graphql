@@ -31,7 +31,7 @@ const MutationExample = () => {
   return (
     <Container>
       <h1 style={{ textAlign: "center" }}>
-        Query on Demand
+        Mutation on Demand
       </h1>
       <Row align="center" justify="between">
         <button onClick={onClick}>Click Me!</button>
